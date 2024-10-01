@@ -1,0 +1,15 @@
+Reference 1: Project Initialization
+Reference 2: Dependency Installation
+Reference 3: Environment Variables Setup
+Reference 4: Settings Setup
+Reference 5: Logging Setup
+Reference 6: Middleware Setup
+Reference 7: Exception Handling Setup
+Reference 8: Database Connection Setup
+Reference 9: JWT Authentication Setup
+Reference 10: Main Application Setup
+Reference 11.1: User Model Creation
+Reference 11.2: Database Connection Setup
+Reference 11.3: Alembic Migration for Users Table
+Reference 11.4: Telegram User Registration Service
+Reference 11.5: Telegram Bot Integration for User Registration
