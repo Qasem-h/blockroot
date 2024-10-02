@@ -10,6 +10,7 @@ class User(Base):
     username = Column(String, index=True)
     first_name = Column(String)  # Add first_name attribute
     last_name = Column(String)   # Add last_name attribute (optional)
+    email = Column(String, nullable=True)  # Email is now optional
     is_active = Column(Boolean, default=True)
     is_superuser = Column(Boolean, default=False)
 

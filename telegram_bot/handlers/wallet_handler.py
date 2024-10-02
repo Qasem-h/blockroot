@@ -1,9 +1,9 @@
+# telegram_bot/handlers/wallet_handler.py
 from aiogram import types
 from sqlalchemy.orm import Session
 from modules.wallets.services import add_wallet, list_wallets, remove_wallet
 from modules.accounts.models import User
 from database.connection import SessionLocal
-from fastapi import HTTPException
 
 # Add a wallet for the user
 async def add_user_wallet(message: types.Message):
@@ -26,16 +26,9 @@ async def add_user_wallet(message: types.Message):
     blockchain = args[1]
     address = args[2]
 
-    try:
-        wallet = add_wallet(db, user.id, blockchain, address)
-        await message.answer(f"Wallet added: {wallet.address}")
-    except HTTPException as e:
-        if e.status_code == 400 and e.detail == 'wallet_already_exists':
-            await message.answer(f"A wallet with the address {address} on {blockchain} already exists.")
-        else:
-            await message.answer("An error occurred while adding the wallet. Please try again later.")
-    finally:
-        db.close()
+    wallet = add_wallet(db, user.id, blockchain, address)
+    await message.answer(f"Wallet added: {wallet.address}")
+    db.close()
 
 # List all wallets for the user
 async def list_user_wallets(message: types.Message):

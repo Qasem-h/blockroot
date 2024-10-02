@@ -12,6 +12,8 @@ async def start_bot(message: types.Message):
     username = message.from_user.username or "Unknown"
     first_name = message.from_user.first_name or ""
     last_name = message.from_user.last_name or ""
+    
+    email = None  # Optional email, not requested explicitly for now
 
     try:
         # Try to get the user by Telegram ID
@@ -20,7 +22,7 @@ async def start_bot(message: types.Message):
         if e.status_code == 404:
             # If user not found, create a new user
             user = create_user_from_telegram(
-                db, telegram_id=telegram_id, username=username, first_name=first_name, last_name=last_name
+                db, telegram_id=telegram_id, username=username, first_name=first_name, last_name=last_name, email=email
             )
             await message.answer(f"Welcome, {user.first_name}! You have been registered.")
         else:
