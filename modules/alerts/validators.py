@@ -1,11 +1,12 @@
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, Field
 
-class GasAlertValidator(BaseModel):
-    blockchain: str = Field(..., description="Blockchain type (e.g., Ethereum, BSC)")
-    threshold_price: float = Field(..., description="Gas price threshold in gwei")
+class AlertValidator(BaseModel):
+    alert_type: str = Field(..., description="Type of the alert")
+    threshold_value: float = Field(..., description="Threshold value", ge=0)
 
-    @field_validator("threshold_price")
-    def validate_threshold_price(cls, v):
-        if v <= 0:
-            raise ValueError("Threshold price must be greater than zero")
+    @classmethod
+    def validate_alert_type(cls, v):
+        allowed_types = ["Gas Fee", "Price Pump", "Transaction Alert"]
+        if v not in allowed_types:
+            raise ValueError(f"Invalid alert type. Allowed types are: {', '.join(allowed_types)}")
         return v

@@ -1,21 +1,18 @@
-from fastapi import APIRouter, Depends
-from sqlalchemy.orm import Session
-from database.connection import get_db
-from modules.wallets.services import add_wallet, list_wallets, remove_wallet
+from fastapi import APIRouter
 
 router = APIRouter()
 
-# Add a new wallet
-@router.post("/add/")
-def add_user_wallet(user_id: int, blockchain: str, address: str, db: Session = Depends(get_db)):
-    return add_wallet(db, user_id, blockchain, address)
+@router.post("/add")
+async def add_wallet(blockchain: str, address: str):
+    # Logic to add the wallet
+    return {"message": f"Wallet {address} on {blockchain} added."}
 
-# List all wallets for a user
-@router.get("/list/{user_id}")
-def list_user_wallets(user_id: int, db: Session = Depends(get_db)):
-    return list_wallets(db, user_id)
+@router.get("/")
+async def list_wallets():
+    # Logic to list wallets
+    return {"wallets": []}
 
-# Remove a wallet by its ID
-@router.delete("/remove/{wallet_id}")
-def remove_user_wallet(wallet_id: int, db: Session = Depends(get_db)):
-    return remove_wallet(db, wallet_id)
+@router.delete("/{wallet_id}")
+async def remove_wallet(wallet_id: int):
+    # Logic to remove the wallet
+    return {"message": f"Wallet {wallet_id} removed."}

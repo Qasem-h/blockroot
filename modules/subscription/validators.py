@@ -1,10 +1,11 @@
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, Field
 
 class SubscriptionValidator(BaseModel):
-    plan_type: str = Field(..., description="Subscription plan type (monthly/yearly)")
+    plan_name: str = Field(..., min_length=3, max_length=30, description="Name of the subscription plan")
 
-    @field_validator("plan_type")
-    def validate_plan_type(cls, v):
-        if v not in ["monthly", "yearly"]:
-            raise ValueError("Invalid plan type")
+    @classmethod
+    def validate_plan_name(cls, v):
+        allowed_plans = ["Free", "Premium", "Pro"]
+        if v not in allowed_plans:
+            raise ValueError(f"Invalid subscription plan. Allowed plans are: {', '.join(allowed_plans)}")
         return v

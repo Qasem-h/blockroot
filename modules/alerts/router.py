@@ -1,21 +1,18 @@
-from fastapi import APIRouter, Depends
-from sqlalchemy.orm import Session
-from database.connection import get_db
-from modules.alerts.services import create_gas_alert, list_gas_alerts, remove_gas_alert
+from fastapi import APIRouter
 
 router = APIRouter()
 
-# Add a new gas price alert
-@router.post("/gas-alert/")
-def add_gas_alert(user_id: int, threshold: float, db: Session = Depends(get_db)):
-    return create_gas_alert(db, user_id, threshold)
+@router.get("/list")
+async def list_alerts():
+    # Logic to list alerts
+    return {"alerts": []}
 
-# List all gas price alerts for a user
-@router.get("/gas-alerts/{user_id}")
-def list_gas_alerts(user_id: int, db: Session = Depends(get_db)):
-    return list_gas_alerts(db, user_id)
+@router.post("/add")
+async def add_alert(alert_data: dict):
+    # Logic to add an alert
+    return {"message": "Alert added"}
 
-# Remove a gas price alert by its ID
-@router.delete("/gas-alert/{alert_id}")
-def remove_gas_alert(alert_id: int, db: Session = Depends(get_db)):
-    return remove_gas_alert(db, alert_id)
+@router.delete("/{alert_id}")
+async def remove_alert(alert_id: int):
+    # Logic to remove an alert
+    return {"message": f"Alert {alert_id} removed"}

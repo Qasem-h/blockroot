@@ -1,11 +1,15 @@
-# telegram_bot/handlers/wallet_handler.py
-from aiogram import types
+from aiogram import Router, types
 from sqlalchemy.orm import Session
 from modules.wallets.services import add_wallet, list_wallets, remove_wallet
 from modules.accounts.models import User
 from database.connection import SessionLocal
+from aiogram.filters import Command
+
+# Initialize router
+router = Router()
 
 # Add a wallet for the user
+@router.message(Command(commands=["add_wallet"]))
 async def add_user_wallet(message: types.Message):
     db: Session = SessionLocal()
     telegram_id = message.from_user.id
@@ -31,6 +35,7 @@ async def add_user_wallet(message: types.Message):
     db.close()
 
 # List all wallets for the user
+@router.message(Command(commands=["list_wallets"]))
 async def list_user_wallets(message: types.Message):
     db: Session = SessionLocal()
     telegram_id = message.from_user.id
@@ -51,6 +56,7 @@ async def list_user_wallets(message: types.Message):
     db.close()
 
 # Remove a wallet
+@router.message(Command(commands=["remove_wallet"]))
 async def remove_user_wallet(message: types.Message):
     db: Session = SessionLocal()
     telegram_id = message.from_user.id

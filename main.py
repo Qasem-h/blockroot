@@ -22,6 +22,7 @@ app.include_router(wallets_router, prefix="/wallets")
 app.include_router(alerts_router, prefix="/alerts")
 app.include_router(subscription_router, prefix="/subscription")
 
+
 @app.get("/health")
 def health_check():
     return {"status": "healthy"}

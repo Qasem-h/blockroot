@@ -1,3 +1,6 @@
-def format_gas_alert_message(blockchain: str, threshold: float) -> str:
-    """Format a gas alert message for a given blockchain and threshold."""
-    return f"Gas alert set for {blockchain} at {threshold} gwei."
+def format_alert_details(alert):
+    """
+    Formats alert details for display.
+    """
+    status = "Active" if alert.active else "Inactive"
+    return f"Alert Type: {alert.alert_type}, Threshold: {alert.threshold_value}, Status: {status}"
